@@ -1,41 +1,63 @@
 // Дано натуральне число n ( ), дійсне число w і масив з n дійс-них чисел. Видалити з масиву елемент, що є найближчим до числа w.
 #include <iostream>
+#include <cmath>     // для функції fabs()
 using namespace std;
+
 int main()
 {
-    double a[20], w;
-    int N;
-    int k;                // Номер елементу, що видалятиметься
-    double Min;                         // Мінімальна відстань
-    cout << "w = "; cin >> w;
-    cout << "N = ";
-    cin >> N;
-    for (int i = 0; i < N; i++)
+    const int MAX_SIZE = 20;    // Максимальна кількість елементів у масиві
+    double arr[MAX_SIZE];       // Масив дійсних чисел
+    double w;                   // Задане число
+    int n;                      // Кількість елементів у масиві
+
+    cout << "Enter w: ";
+    cin >> w;
+    cout << "Enter number of elements (n): ";
+    cin >> n;
+
+    // --- Введення елементів масиву ---
+    for (int i = 0; i < n; i++)
     {
-        cout << "a[" << i << "] = ";
-        cin >> a[i];
+        cout << "arr[" << i << "] = ";
+        cin >> arr[i];
     }
-    cout << "\nInitial array\n";    // Виводимо початкові дані
-    for (int i = 0; i < N; i++)
-        cout << a[i] << " ";
-    k = 0;
-    Min = abs(w - a[0]);
-    for (int i = 1; i < N; i++)        // Перебираємо елементи
-        if (fabs(w - a[i]) < Min)
+
+    // --- Вивід початкового масиву ---
+    cout << "\nInitial array:\n";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+
+    // --- Пошук елемента, найближчого до w ---
+    int indexToRemove = 0;                 // Номер елементу, який потрібно видалити
+    double minDistance = fabs(w - arr[0]); // Мінімальна відстань до w
+
+    for (int i = 1; i < n; i++)
+    {
+        double distance = fabs(w - arr[i]); // Поточна відстань
+        if (distance < minDistance)
         {
-            k = i;            // Запам'ятовуємо номер елементу
-            Min = fabs(w - a[i]);      // та відстань до нього
+            minDistance = distance;
+            indexToRemove = i;              // Запам'ятовуємо позицію ближчого елемента
         }
-    for (int i = k + 1; i < N; i++)
-        a[i - 1] = a[i];                    // Зсув елементів
-    N--;                            // Розмір масиву зменшився
-    cout << "\nResultant array";
-    if (N == 0)
-        cout << " is empty";
+    }
+
+    // --- Видалення знайденого елемента ---
+    for (int i = indexToRemove + 1; i < n; i++)
+        arr[i - 1] = arr[i]; // Зсуваємо елементи вліво
+
+    n--; // Зменшуємо розмір масиву
+
+    // --- Вивід результату ---
+    cout << "\nResulting array";
+    if (n == 0)
+        cout << " is empty.";
     else
     {
         cout << ":\n";
-        for (int i = 0; i < N; i++)   // Виводимо результуючий 
-            cout << a[i] << " ";                      // масив
+        for (int i = 0; i < n; i++)
+            cout << arr[i] << " ";
     }
+
+    cout << endl;
 }
