@@ -10,7 +10,7 @@ int main()
     int N;                         // Кількість елементів масиву
 
     // --- Введення розміру масиву ---
-    cout << "Enter the number of elements (1–20): ";
+    cout << "Enter the number of elements (1-20): ";
     cin >> N;
 
     if (N < 1 || N > MAX_SIZE) {
@@ -45,6 +45,4 @@ int main()
     for (int i = 0; i < N; i++)
         cout << a[i] << " ";
     cout << endl;
-
-    return 0;
 }
