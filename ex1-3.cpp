@@ -1,33 +1,44 @@
-// Дано натуральне число   ( ) і масив з   дійсних чисел. Визначити в цьому масиві кількість ділянок, на яких його елементи убувають.
-
 #include <iostream>
-
 using namespace std;
+
 int main()
 {
-    int n, i;                    // Кількість елементів масиву
-    double a[100];                                    // Масив
-    int c;                                // Кількість ділянок
-    bool flag;
-    cout << "n = ";
+    int n;                // Кількість елементів масиву
+    double arr[100];      // Масив дійсних чисел
+    int count;            // Кількість убуваючих ділянок
+    bool newSegment;      // Прапорець початку нової ділянки
+
+    // --- Введення кількості елементів ---
+    cout << "Enter number of elements (n): ";
     cin >> n;
-    for (i = 0; i < n; i++)
+
+    // --- Введення елементів масиву ---
+    for (int i = 0; i < n; i++)
     {
-        cout << "a[" << i << "] = ";
-        cin >> a[i];
+        cout << "arr[" << i << "] = ";
+        cin >> arr[i];
     }
-    c = 0;
-    flag = true;
-    for (i = 1; i < n; i++)    // Починаємо з другого елементу
-        if (a[i] > a[i - 1])                    // Є зростання
+
+    // --- Пошук убуваючих ділянок ---
+    count = 0;
+    newSegment = true;  // спочатку готові до нової ділянки
+
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] < arr[i - 1]) // елемент убуває
         {
-            if (flag)                          // Нова ділянка
+            if (newSegment)       // початок нової убуваючої ділянки
             {
-                c++;
-                flag = false;
+                count++;
+                newSegment = false;
             }
         }
-        else                                    // Незростання
-            flag = true;
-    cout << "Count = " << c << '\n';
+        else
+        {
+            newSegment = true;    // кінець убуваючої ділянки
+        }
+    }
+
+    // --- Вивід результату ---
+    cout << "Count of decreasing segments = " << count << endl;
 }
